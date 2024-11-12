@@ -1,0 +1,28 @@
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.datasets import load_diabetes
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.svm import SVC
+
+data = load_diabetes()
+X, y = data.data, data.target
+df = pd.DataFrame(X, columns=data.feature_names)
+df['target'] = y
+df.hist(bins=15, figsize=(15, 10))
+plt.show()
+
+numerical_features = df.select_dtypes(include=[np.number]).shape[1]
+categorical_features = df.select_dtypes(exclude=[np.number]).shape[1]
+print("Numerical features are: ",numerical_features)
+print("Categorical features are: ",categorical_features)
+
+sns.heatmap(df.corr(),annot=True,cmap="coolwarm")
+plt.show()
+
+rfmean = np.mean(rf_accuracies)
+svmmean = np.mean(svm_accuracies)
+plt.bar(['Random Forest', 'SVM'], [rfmean, svmmean])
+plt.title('visualized')
+plt.show()
